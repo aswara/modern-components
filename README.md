@@ -19,8 +19,24 @@ import { Sidebar } from 'modern-components'
 
 class Example extends Component {
   render () {
+    const menus = [
+        {
+            to: 'dashboard',
+            label: 'Dashboard',
+            icon: 'D',
+        }, {
+            to: 'user',
+            label: 'User',
+            icon: 'U'
+        }
+    ]
+
     return (
-      <Sidebar>
+      <Sidebar
+        active='dashboard'
+        logo='AS'
+        menus={menus}
+      >
         <div>
           <h1>Dashboard</h1>
         </div>

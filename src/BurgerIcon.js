@@ -7,6 +7,7 @@ export default function BurgerIcon (props) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        cursor: 'pointer'
     }
 
     const iconStick = {

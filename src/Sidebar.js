@@ -33,8 +33,8 @@ class Sidebar extends Component {
             activeLink: menu.to
         })
 
-        if(onClickLink) { 
-            onClickLink(menu) 
+        if (onClickLink) {
+            onClickLink(menu)
         }
     }
 
@@ -44,25 +44,34 @@ class Sidebar extends Component {
         })
     }
 
+    renderChildren = () => {
+        const { showLabel, widthHover, width } = this.props
+    return React.Children.map(this.props.children, child =>
+        React.cloneElement(child, { 
+            hoverSidebar: showLabel ? this.state.hover : false, 
+            widthSidebar: width, 
+            widthHover: widthHover }));
+    }
+
     render() {
         const {
-            children,
             width,
             showLabel,
             styleLabel,
             widthHover,
-            hideBar,
+            mobile,
             widthOpen,
             background,
             colorActive,
             menus,
             logo,
-            colorBurger
+            colorBurger,
+            shadow
         } = this.props
 
         const { hover, open, widthWindow, activeLink, hoverLink } = this.state
 
-        const hide = widthWindow < hideBar
+        const hide = widthWindow < mobile
 
         const widthSide = showLabel && hover ? widthHover : width
 
@@ -75,7 +84,8 @@ class Sidebar extends Component {
             display: 'flex',
             flexDirection: 'column',
             transition: '0.5s',
-            zIndex: 100
+            zIndex: 100,
+            boxShadow: shadow ? '1px 0 5px lightgray' : '0 0 0 lightgray',
         }
 
         const wrapperHide = {
@@ -96,9 +106,10 @@ class Sidebar extends Component {
             width: '100%',
             display: 'flex',
             alignItems: 'center',
-            padding: '20px 0',
+            padding: '15px 0',
             cursor: 'pointer',
-            position: 'relative'
+            position: 'relative',
+            marginBottom: 5,
         }
 
 
@@ -143,6 +154,7 @@ class Sidebar extends Component {
         }
 
         const styleLogo = {
+            marginTop: hide ? -50 : 0,
             marginBottom: 10,
             height: width,
             display: 'flex',
@@ -156,11 +168,11 @@ class Sidebar extends Component {
                 {
                     hide &&
                     <div style={button}>
-                    <BurgerIcon
-                        color={colorBurger}
-                        open={open}
-                        onClick={() => this.setState({ open: !open })}
-                    />
+                        <BurgerIcon
+                            color={colorBurger}
+                            open={open}
+                            onClick={() => this.setState({ open: !open })}
+                        />
                     </div>
                 }
 
@@ -169,35 +181,34 @@ class Sidebar extends Component {
                     onMouseEnter={() => this.setState({ hover: true })}
                     onMouseLeave={() => this.setState({ hover: false, hoverLink: null })}
                 >
-                    {
-                        !hide &&
-                        <div style={styleLogo}>
-                            <span>{logo}</span>
-                        </div>
-                    }
+
+                    <div style={styleLogo}>
+                        <span>{logo}</span>
+                    </div>
+                    
                     {
                         menus.map((menu, i) =>
                             <div
-                                onMouseEnter={()=>this.handleHoverLink(menu)}
-                                onClick={()=>this.handlePush(menu)}
+                                onMouseEnter={() => this.handleHoverLink(menu)}
+                                onClick={() => this.handlePush(menu)}
                                 key={i}
-                                style={activeLink === menu.to || hoverLink === menu.to ? styleMenuActive : styleMenu }
-                                >
-                                <span style={{marginLeft: 20}}>{menu.icon}</span>
+                                style={activeLink === menu.to || hoverLink === menu.to ? styleMenuActive : styleMenu}
+                            >
+                                <span style={{ marginLeft: 20 }}>{menu.icon}</span>
                                 <span style={styleLabel}>
-                                {!open && showLabel && hover && menu.label} {hide && open && menu.label}
+                                    {!open && showLabel && hover && menu.label} {hide && open && menu.label}
                                 </span>
                                 {
-                                    activeLink === menu.to || hoverLink === menu.to ? 
-                                    <span style={styleActive}></span>
-                                    : null
+                                    activeLink === menu.to || hoverLink === menu.to ?
+                                        <span style={styleActive}></span>
+                                        : null
                                 }
                             </div>
                         )
                     }
                 </div>
                 <div style={container}>
-                    {children}
+                    {this.renderChildren()}
                 </div>
             </div>
         );
@@ -205,40 +216,44 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
+    shadow: PropTypes.bool,
     width: PropTypes.number,
     widthHover: PropTypes.number,
-    hideBar: PropTypes.number,
+    mobile: PropTypes.number,
     widthOpen: PropTypes.number,
     background: PropTypes.string,
     colorActive: PropTypes.string,
     colorBurger: PropTypes.string,
+    active: PropTypes.string,
     showLabel: PropTypes.bool,
     menus: PropTypes.array,
     styleLabel: PropTypes.object,
 };
 
 Sidebar.defaultProps = {
+    shadow: false,
     width: 60,
     widthHover: 150,
-    hideBar: 700,
+    mobile: 700,
     widthOpen: 200,
-    background: '#F5F6F8',
+    background: 'white',
     colorActive: '#2B43A4',
     colorBurger: '#2B43A4',
     showLabel: true,
     logo: 'AS',
+    active: 'dashboard',
     styleLabel: {
         marginLeft: 10,
         fontSize: 14,
-        fontWeight: 500,
+        fontWeight: 550,
     },
     menus: [
         {
-            to: '/dashboard',
+            to: 'dashboard',
             label: 'Dashboard',
             icon: 'D',
         }, {
-            to: '/user',
+            to: 'user',
             label: 'User',
             icon: 'U'
         }
