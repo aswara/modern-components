@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import Sidebar from './Sidebar'
 
-describe('ExampleComponent', () => {
+describe('Sidebar', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(Sidebar).toBeTruthy()
   })
 })

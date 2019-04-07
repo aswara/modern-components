@@ -15,12 +15,16 @@ npm install --save modern-components
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'modern-components'
+import { Sidebar } from 'modern-components'
 
 class Example extends Component {
   render () {
     return (
-      <MyComponent />
+      <Sidebar>
+        <div>
+          <h1>Dashboard</h1>
+        </div>
+      </Sidebar>
     )
   }
 }
