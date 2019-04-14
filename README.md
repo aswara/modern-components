@@ -15,35 +15,49 @@ npm install --save modern-components
 ```jsx
 import React, { Component } from 'react'
 
-import { Sidebar } from 'modern-components'
+import { Sidebar, Header, BurgerIcon, Avatar, Container, ListItem, List } from 'modern-components'
 
-class Example extends Component {
-  render () {
-    const menus = [
-        {
-            to: 'dashboard',
-            label: 'Dashboard',
-            icon: 'D',
-        }, {
-            to: 'user',
-            label: 'User',
-            icon: 'U'
-        }
-    ]
+export default class App extends Component {
+  state = {
+    card:false
+  }
 
+  render() {
+    const { card } = this.state
+    const styleItem = { display: 'flex', marginBottom: 20, }
     return (
-      <Sidebar
-        active='dashboard'
-        logo='AS'
-        menus={menus}
-      >
-        <div>
-          <h1>Dashboard</h1>
-        </div>
-      </Sidebar>
+      <div>
+        <Sidebar widthOpen={250} showLabel={false} shadow>
+          <Header
+            shadow
+            right={<Avatar height={45}>MC</Avatar>}
+          >
+            <Container>
+              <div onClick={()=>this.setState({ card: !card })}>
+                Klik
+              </div>
+              <List card={card}>
+                <ListItem row={4}  card={card} shadow style={styleItem}>
+                  <Avatar>AS</Avatar> Tes
+                </ListItem>
+                <ListItem row={4}  card={card} style={styleItem}>
+                  <Avatar>AS</Avatar> Tes
+                </ListItem>
+                <ListItem row={4}  card={card} shadow style={styleItem}>
+                  <Avatar>AS</Avatar> Tes
+                </ListItem>
+                <ListItem  row={4}  card={card} shadow style={styleItem}>
+                  <Avatar>AS</Avatar> Tes
+                </ListItem>
+              </List>
+            </Container>
+          </Header>
+        </Sidebar>
+      </div>
     )
   }
 }
+
 ```
 
 ## License
