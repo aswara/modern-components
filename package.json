@@ -20,8 +20,6 @@
     "prepare": "npm run build",
     "predeploy": "cd example && npm run build",
     "deploy": "gh-pages -d example/build",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
